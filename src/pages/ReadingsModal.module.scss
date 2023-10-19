@@ -15,7 +15,7 @@
   align-items: center;
   position: absolute;
   margin: auto;
-  background-color: transparent ;
+  background-color: transparent;
   font-size: 25px;
 
   input {
@@ -27,5 +27,42 @@
   .modal-button {
     font-size: 25px;
     padding: 1rem;
+  }
+}
+
+.reading-type {
+  h2 {
+    display: block;
+  }
+
+  div {
+    display: inline;
+
+    /* For Hiding Radio Button Circles */
+    input {
+      position: absolute;
+      left: -9999px;
+    }
+
+    input[type="radio"]:checked + label > img {
+      border: 1px solid rgb(157, 255, 0);
+      box-shadow: 0 0 3px 3px #9e00e2;
+    }
+    input[type="radio"] + label > img {
+      border: 1px rgb(0, 0, 0);
+      padding: 10px;
+      transition: 500ms all;
+    }
+    input[type="radio"]:checked + label > img {
+      transform: rotateZ(-10deg) rotateX(10deg);
+    }
+  }
+
+
+  button {
+    display: block;
+    margin: auto;
+    left: 0;
+    right: 0;
   }
 }

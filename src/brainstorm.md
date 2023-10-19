@@ -15,3 +15,16 @@ Sidebar Items:
 - pictures.
 - health.
 
+Health:
+- exercise.
+- training.
+- running 
+- Nutrition records.
+- Food Library.
+- 
+- 
+
+readings
+- books
+- articles
+- other 

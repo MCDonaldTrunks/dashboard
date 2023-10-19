@@ -1,6 +1,5 @@
 import React from "react";
 import Modal from "react-modal";
-import Datetime from "react-datetime";
 import { useState } from "react";
 import styles from "./ReadingsModal.module.scss";
 
