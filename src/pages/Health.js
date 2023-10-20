@@ -44,6 +44,10 @@ const healthInputs = [
   },
 ];
 
+const Factor = styled.div`
+  
+`
+
 function Health() {
   const [modalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState(healthInputs);
