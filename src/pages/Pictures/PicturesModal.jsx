@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 import { useState } from "react";
-import styles from "./ReadingsModal.module.scss";
+import styles from "../css/Modal.module.scss";
 
 export default function ({ isOpen, onClose, addPicture }) {
   const [input, setInput] = useState();

@@ -8,14 +8,14 @@ import MySidebar from './components/sidebar';
 import { lazy } from 'react';
 
 // *** Pages *** //
-import Readings from './pages/Readings';
-import Dashboard from './pages/Dashboard';
-import Calendar from './pages/Calendar';
+import Readings from './pages/Readings/Readings';
+import Dashboard from './pages//Dashboard/Dashboard';
+import Calendar from './pages/Calendar/Calendar';
 //const Calendar = lazy(() => import('./pages/Calendar'));
-import Health from './pages/Health';
-import Pictures from './pages/Pictures';
-import Todo from './pages/Todo';
-import Financials from './pages/Financials';
+import Health from './pages/Health/Health';
+import Pictures from './pages/Pictures/Pictures';
+import Todo from './pages/Todo/Todo';
+import Financials from './pages/Financials/Financials';
 
 //const Component = lazy(() => import('./pages/Dashboard'));
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import HealthModal from "./HealthModal";
+import 'animate.css';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -51,9 +52,10 @@ const Factor = styled.div`
 function Health() {
   const [modalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState(healthInputs);
+  const [active, setActive] = useState(false)
   return (
     <>
-      <Title>Health</Title>
+      <Title className={active?"animate__animated animate__bounce": ""} onClick={()=> setActive(!active)}>Health</Title>
       <StyledButton onClick={() => setModalOpen(true)}>Add Factor</StyledButton>
       <Wrapper>
         {data ? 
