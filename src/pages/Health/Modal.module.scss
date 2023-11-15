@@ -1,0 +1,140 @@
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.541);
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  position: absolute;
+  display: block;
+  margin: 0 auto;
+  width: 350px;
+  color: white;
+  width: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.content {
+  display: flex;
+  margin: 0 auto;
+  background-color: transparent;
+  font-size: 25px;
+  width: auto;
+
+  input {
+    font-size: 25px;
+    border: none;
+    margin-bottom: 10px;
+  }
+
+  .modal-button {
+    font-size: 25px;
+    padding: 1rem;
+  }
+}
+
+form {
+  height: 100%;
+  width: 100%;
+}
+
+.health-type {
+  padding: 200px;
+
+  div {
+    width: 900px;
+    height: auto;
+    display: flex;
+    margin: 0 auto;
+    div {
+      width: 33%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      label {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          height: 150px;
+          z-index: 100;
+          display: flex;
+          cursor: pointer;
+        }
+        svg[id="work-out"] path {
+          fill: red !important;
+        }
+        svg[id="work-out"] text {
+          fill: red !important;
+        }
+        svg[id="meal"] path {
+          fill: yellow;
+        }
+        svg[id="meal"] text {
+          fill: yellow !important;
+        }
+        svg[id="other"] path {
+          fill: green !important;
+        }
+        svg[id="other"] text {
+          fill: green !important;
+        }
+      }
+
+      input {
+        position: absolute;
+        left: -9999px;
+      }
+
+      input[type="radio"] + label > img {
+        border: 1px rgb(0, 0, 0);
+        padding: 10px;
+      }
+    }
+  }
+
+  button {
+    display: block;
+    margin: auto;
+    left: 0;
+    right: 0;
+  }
+}
+
+.choice-text {
+  color: white;
+  border: 10px solid transparent;
+  padding: 10px;
+  margin: 10px 0;
+  height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.choice-text.work-out {
+  color: red;
+  border: 10px solid red;
+}
+
+.choice-text.meal {
+  border: 10px solid yellow;
+  color: yellow;
+  transition: delay 2s;
+}
+
+.choice-text.other-option {
+  border: 10px solid green;
+  color: green;
+  transition: delay 2s;
+}

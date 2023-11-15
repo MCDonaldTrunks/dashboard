@@ -59,7 +59,7 @@ function Health() {
       <StyledButton onClick={() => setModalOpen(true)}>Add Factor</StyledButton>
       <Wrapper>
         {data ? 
-          Object.keys(data).map((item) => <div className={`card intense-${item.maxedOut}`}>
+          Object.keys(data).map((item) => <Factor className={`card intense-${item.maxedOut}`}>
           <h3>Type: {`${healthInputs[item].type}`}<span id="type"></span></h3>
           <p>Title: {`${healthInputs[item].inputTitle}`}<span id="inputTitle"></span></p>
           <p>Datetime: {`${healthInputs[item].datetime}`}<span id="datetime"></span></p>
@@ -67,7 +67,7 @@ function Health() {
           <p>Type 2: {`${healthInputs[item].type2}`}<span id="type2"></span></p>
           <p>Amount: {`${healthInputs[item].amount}`}<span id="amount"></span></p>
           <p>Comment: {`${healthInputs[item].comment}`}<span id="comment"></span></p>
-      </div>
+      </Factor>
             
         ) : (
           <h3> Error no data found</h3>

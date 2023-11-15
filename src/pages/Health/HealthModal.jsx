@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import styles from "../css/Modal.module.scss";
+import styles from "./Modal.module.scss";
 import Modal from "react-modal";
 import "animate.css";
 import { ReactComponent as WorkOut } from "./images/work-out.svg";
@@ -22,7 +22,7 @@ export default function ({ isOpen, onClose, transfer }) {
     transfer(isActive);
 
     onClose();
-  };
+  }; 
 
   //
 
@@ -69,16 +69,45 @@ export default function ({ isOpen, onClose, transfer }) {
     setisActive(proObj);
   };
 
+  const choiceLabel = () => {
+    if (input == ""){
+      
+      return <div className={`${styles["choice-text"]}`}>Choose event type</div> 
+    }else if (input == "Meal"){
+      return <div className={`${styles["choice-text"]} ${styles.meal}`}>
+        {`${input}`}
+      </div>
+    }else if(input == "Other"){
+      return <div className={`${styles["choice-text"]} ${styles["other-option"]}`}>
+        {`${input}`}
+      </div>
+    }
+    else if(input == "Work-out"){
+      return <div className={`${styles["choice-text"]} ${styles["work-out"]}`}>
+      {`${input}`}
+      </div>
+    }
+
+    
+  }
+
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onClose}
+      onRequestClose={()=>{onClose(); setInput(''); setisActive({
+        "Work-out": { active: false, className: "" },
+        Meal: { active: false, className: "" },
+        Other: { active: false, className: "" },
+      });}}
       overlayClassName={styles.overlay}
       className={styles.content}
     >
+      <h2 className={styles.h2}>Health Factor Input:</h2>
       <form className={styles["health-type"]} onSubmit={onSubmit}>
-        <h2>Type of health input:</h2>
+        
+        {choiceLabel()}
         <div>
+          
           <div>
             <input type="radio" name="type" value="work-out" id="work-out" />
             <label
@@ -87,7 +116,7 @@ export default function ({ isOpen, onClose, transfer }) {
               }}
               for="work-out"
             >
-              <WorkOut className={isActive["Work-out"].className}></WorkOut>
+              <WorkOut id="work-out" className={isActive["Work-out"].className}></WorkOut>
             </label>
           </div>
           <div>
@@ -98,7 +127,7 @@ export default function ({ isOpen, onClose, transfer }) {
               }}
               for="meal"
             >
-              <Meal className={isActive.Meal.className}></Meal>
+              <Meal id="meal" className={isActive.Meal.className}></Meal>
             </label>
           </div>
           <div>
@@ -110,7 +139,7 @@ export default function ({ isOpen, onClose, transfer }) {
               }}
               for="other"
             >
-              <Other className={isActive.Other.className}></Other>
+              <Other id='other' className={isActive.Other.className}></Other>
             </label>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 import { useState } from "react";
-import styles from "../css/Modal.module.scss";
+import styles from "./Modal.module.scss";
 
 export default function ({ isOpen, onClose, onDataAdded }) {
   const [title, setTitle] = useState("");
