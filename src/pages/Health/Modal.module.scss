@@ -47,7 +47,8 @@ form {
 }
 
 .health-type {
-  padding: 100px;
+  padding: 100px 50px 50px 50px;
+  transition: all 1s;
 
   div {
     width: 900px;
@@ -149,4 +150,12 @@ form {
 .choice-text.other-option {
   box-shadow: 0px 1px 15px 8px green;
   color: green;
+}
+
+
+.workout-form {
+  width: 900px;
+  label {
+    display: block;
+  }
 }

@@ -52,12 +52,12 @@ function Dashboard() {
       <Title>Dashboard</Title>
       <Wrapper>
         <div className="part calendar"><StyledLink to='/Calendar'>cal</StyledLink> </div>
-        <div className="part financials">finan</div>
-        <div className="part pictures">pics</div>
-        <div className="part readings">read</div>
-        <div className="part health">health</div>
-        <div className="part todo">todo</div>
-        <div className="part journal">journal</div>
+        <div className="part financials"><StyledLink to='/Financials'>finan</StyledLink></div>
+        <div className="part pictures"><StyledLink to='/Pictures'>pics</StyledLink></div>
+        <div className="part readings"><StyledLink to='/Readings'>read</StyledLink></div>
+        <div className="part health"><StyledLink to='/Health'>health</StyledLink></div>
+        <div className="part todo"><StyledLink to='/Todo'>todo</StyledLink></div>
+        <div className="part journal"><StyledLink to='/Journal'>journal</StyledLink></div>
         <div className="part "></div>
         <div className="part "></div>
       </Wrapper>

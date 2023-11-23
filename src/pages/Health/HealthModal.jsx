@@ -6,8 +6,10 @@ import "animate.css";
 import { ReactComponent as WorkOut } from "./images/work-out.svg";
 import { ReactComponent as Other } from "./images/other.svg";
 import { ReactComponent as Meal } from "./images/meal.svg";
+import  WorkOutForm  from "./components/WorkOutForm"
 
 export default function ({ isOpen, onClose, transfer }) {
+  const [formActive, setFormActive] = useState(false);
   const [input, setInput] = useState("");
   const [isActive, setisActive] = useState({
     "Work-out": { active: false, className: "" },
@@ -19,12 +21,11 @@ export default function ({ isOpen, onClose, transfer }) {
     //console.log('onSubmit');
     event.preventDefault();
     //console.log(input);
-    transfer(isActive);
+    //transfer(isActive);
 
-    onClose();
-  }; 
-
-  //
+    //onClose();
+    setFormActive(true);
+  };
 
   useEffect(() => {
     if (input !== "") {
@@ -32,6 +33,8 @@ export default function ({ isOpen, onClose, transfer }) {
       transFunc();
     }
   }, [input]);
+
+  useEffect(() => {}, [formActive]);
 
   const transFunc = () => {
     const proObj = { ...isActive };
@@ -70,44 +73,77 @@ export default function ({ isOpen, onClose, transfer }) {
   };
 
   const choiceLabel = () => {
-    if (input == ""){
-      
-      return <div className={`${styles["choice-text"]}`}>Choose event type</div> 
-    }else if (input == "Meal"){
-      return <div className={`${styles["choice-text"]} ${styles.meal}`}>
-        {`${input}`}
-      </div>
-    }else if(input == "Other"){
-      return <div className={`${styles["choice-text"]} ${styles["other-option"]}`}>
-        {`${input}`}
-      </div>
+    if (input == "") {
+      return (
+        <div className={`${styles["choice-text"]}`}>Choose event type</div>
+      );
+    } else if (input == "Meal") {
+      return (
+        <div className={`${styles["choice-text"]} ${styles.meal}`}>
+          {`${input}`}
+        </div>
+      );
+    } else if (input == "Other") {
+      return (
+        <div className={`${styles["choice-text"]} ${styles["other-option"]}`}>
+          {`${input}`}
+        </div>
+      );
+    } else if (input == "Work-out") {
+      return (
+        <div className={`${styles["choice-text"]} ${styles["work-out"]}`}>
+          {`${input}`}
+        </div>
+      );
     }
-    else if(input == "Work-out"){
-      return <div className={`${styles["choice-text"]} ${styles["work-out"]}`}>
-      {`${input}`}
-      </div>
-    }
+  };
 
-    
-  }
+  const choiceForm = () => {
+    //     exercises performed lifting/cardio
+    //     sets and reps/speed, time and distance
+    //     intensity level
+    //     pain level
+    //     time and date
+    console.log("choiceForm ran");
+    console.log(formActive);
+    const ops = () => {
+      if (input == "Work-out") {
+        console.log("returning workout form");
+        return (
+          <WorkOutForm></WorkOutForm>
+        );
+      } else if (input == "Other") {
+      } else if (input == "Meals") {
+      } else if (input == "") {
+        // alert("Please select one");
+        return <div>none yet selected</div>;
+      }
+    };
+
+    if (formActive) {
+      return ops();
+    }
+  };
 
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={()=>{onClose(); setInput(''); setisActive({
-        "Work-out": { active: false, className: "" },
-        Meal: { active: false, className: "" },
-        Other: { active: false, className: "" },
-      });}}
+      onRequestClose={() => {
+        onClose();
+        setInput("");
+        setisActive({
+          "Work-out": { active: false, className: "" },
+          Meal: { active: false, className: "" },
+          Other: { active: false, className: "" },
+        });
+      }}
       overlayClassName={styles.overlay}
       className={styles.content}
     >
       <h2 className={styles.h2}>Health Factor Input:</h2>
       <form className={styles["health-type"]} onSubmit={onSubmit}>
-        
         {choiceLabel()}
         <div>
-          
           <div>
             <input type="radio" name="type" value="work-out" id="work-out" />
             <label
@@ -116,7 +152,10 @@ export default function ({ isOpen, onClose, transfer }) {
               }}
               for="work-out"
             >
-              <WorkOut id="work-out" className={isActive["Work-out"].className}></WorkOut>
+              <WorkOut
+                id="work-out"
+                className={isActive["Work-out"].className}
+              ></WorkOut>
             </label>
           </div>
           <div>
@@ -139,7 +178,7 @@ export default function ({ isOpen, onClose, transfer }) {
               }}
               for="other"
             >
-              <Other id='other' className={isActive.Other.className}></Other>
+              <Other id="other" className={isActive.Other.className}></Other>
             </label>
           </div>
         </div>
@@ -147,6 +186,7 @@ export default function ({ isOpen, onClose, transfer }) {
         <button className={styles["modal-button"]} type="submit">
           Add Factor
         </button>
+        {choiceForm()}
       </form>
     </Modal>
   );
