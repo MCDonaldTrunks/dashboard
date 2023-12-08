@@ -5,7 +5,7 @@ function WorkOutForm() {
   return (
     <section className={styles["workout-form"]}>
       <label for="exercise_name">
-        Exercise{" "}
+        Exercise:{" "}
         <input
           type="text"
           id="exercise_name"
@@ -14,15 +14,15 @@ function WorkOutForm() {
       </label>
 
       <label for="sets">
-        Sets <input type="number" placeholder="sets" id="sets"></input>
+        Sets:{" "} <input type="number" placeholder="sets" id="sets"></input>
       </label>
 
       <label for="Reps">
-        Reps <input type="number" placeholder="Reps" id="Reps"></input>
+        Reps: {" "} <input type="number" placeholder="Reps" id="Reps"></input>
       </label>
 
       <label for="instensity">
-        Instensity Level{" "}
+        Instensity Level:{" "}
         <select id="instensity">
           <option value="1">1</option>
           <option value="2">2</option>
@@ -38,7 +38,7 @@ function WorkOutForm() {
       </label>
 
       <label for="pain">
-        Pain Level{" "}
+        Pain Level:{" "}
         <select id="pain">
           <option value="1">1</option>
           <option value="2">2</option>
@@ -54,11 +54,11 @@ function WorkOutForm() {
       </label>
 
       <label for="datetime">
-        Date and time <input id="datetime" type="datetime-local"></input>
+        Date and time:{" "} <input id="datetime" type="datetime-local"></input>
       </label>
 
       <label for="notes">
-        notes <textarea id="notes"></textarea>
+        notes: {" "} <textarea id="notes" rows="5" cols="40"></textarea>
       </label>
     </section>
   );

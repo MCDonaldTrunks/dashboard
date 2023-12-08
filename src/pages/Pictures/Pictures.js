@@ -37,10 +37,11 @@ const Picturebox = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  aspect-ratio: auto;
 
   img{
-    height: 200px;
-    width: 100px;
+    height: 150px;
+    aspect-ratio: auto;
     margin-right: 20px;
     margin-bottom: 20px;
   }

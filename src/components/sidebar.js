@@ -14,6 +14,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import CreateIcon from '@mui/icons-material/Create';
 
 const StyledSidebar = styled(Sidebar)`
   position: relative;
@@ -158,6 +159,15 @@ const MySidebar = () => {
         >
           {" "}
           {collapsed ? "" : <span>Todo</span>}{" "}
+        </StyledMenuItem>
+        <StyledMenuItem
+          onClick={() => setActive("Journal")}
+          active={active === "Journal"}
+          component={<Link to="/Journal" />}
+          icon={<CreateIcon />}
+        >
+          {" "}
+          {collapsed ? "" : <span>Journal</span>}{" "}
         </StyledMenuItem>
       </StyledMenu>
     </StyledSidebar>

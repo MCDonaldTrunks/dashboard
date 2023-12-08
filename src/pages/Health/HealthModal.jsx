@@ -6,7 +6,9 @@ import "animate.css";
 import { ReactComponent as WorkOut } from "./images/work-out.svg";
 import { ReactComponent as Other } from "./images/other.svg";
 import { ReactComponent as Meal } from "./images/meal.svg";
-import  WorkOutForm  from "./components/WorkOutForm"
+import WorkOutForm from "./components/WorkOutForm";
+import MealForm from "./components/MealForm";
+import OtherForm from "./components/OtherForm";
 
 export default function ({ isOpen, onClose, transfer }) {
   const [formActive, setFormActive] = useState(false);
@@ -109,11 +111,11 @@ export default function ({ isOpen, onClose, transfer }) {
     const ops = () => {
       if (input == "Work-out") {
         console.log("returning workout form");
-        return (
-          <WorkOutForm></WorkOutForm>
-        );
+        return <WorkOutForm />;
       } else if (input == "Other") {
-      } else if (input == "Meals") {
+        return <OtherForm />;
+      } else if (input == "Meal") {
+        return <MealForm />;
       } else if (input == "") {
         // alert("Please select one");
         return <div>none yet selected</div>;
