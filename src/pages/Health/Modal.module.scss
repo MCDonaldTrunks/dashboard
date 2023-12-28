@@ -73,6 +73,7 @@ form {
           z-index: 100;
           display: flex;
           cursor: pointer;
+          aspect-ratio: 1 / 1;
         }
         svg[id="work-out"] path {
           fill: red !important;
@@ -199,42 +200,39 @@ form {
 
 // ********************meal form****************************
 
-.meal-form {
-  width: 900px;
-  color: white;
-  label {
-    display: block;
+.formContainer {
+  max-width: 400px;
+  margin: 0 auto;
+}
 
-    .currencyinput {
-      position: absolute;
-      left: 28px;
-      top: 0px;
-      color: blue;
-    
-      
-    }
-    input {
-      margin-left: 20px;
-    }
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  padding: 8px;
+  margin-top: 4px;
+}
+
+.priceInput {
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-right: 5px;
   }
 }
 
 
-.currency-wrapper {
-  position: relative;
-  display: block;
-  input {
-    border: 0;
-    padding: 0px 0px 0px 30px;
-  }
-}
 
-.price {
-  display: inline;
-}
-
-
-// ********************meal form****************************
+// ********************other form****************************
 .other-form {
   width: 900px;
   label {

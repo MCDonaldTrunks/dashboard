@@ -157,6 +157,7 @@ export default function ({ isOpen, onClose, transfer }) {
               <WorkOut
                 id="work-out"
                 className={isActive["Work-out"].className}
+                
               ></WorkOut>
             </label>
           </div>
