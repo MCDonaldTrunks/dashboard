@@ -21,6 +21,20 @@ const StyledSidebar = styled(Sidebar)`
   color: #fff;
   height: 100%;
   z-index: 0;
+  ::-webkit-scrollbar {
+  width: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+  background: rgb(153 153 153 / 0.27);
+  opacity: .01;
+  border-radius: 10px;
+ }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    
+  }
 `;
 
 const MenuIconBox = styled.div`

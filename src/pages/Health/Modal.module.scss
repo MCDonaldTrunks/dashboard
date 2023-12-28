@@ -153,6 +153,9 @@ form {
 }
 // ********************workout form****************************
 .workout-form {
+  width: 70%;
+  
+
   width: 900px;
   label {
     display: block;
@@ -172,6 +175,27 @@ form {
     }
   }
 }
+
+.separator{
+  display: inline;
+}
+
+.right{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  
+}
+
+.left{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 300px;
+  
+}
+
+
 
 // ********************meal form****************************
 
