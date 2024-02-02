@@ -1,33 +1,81 @@
-import { Height } from '@mui/icons-material';
-import React from 'react';
-import styles from '../Modal.module.scss'
+import React, { useState } from 'react';
+import styles from '../Modal.module.scss';
 
-const SleepForm = () => {
+const SleepForm = ({ inputSubmit }) => {
+    const [sleepData, setSleepData] = useState({
+        hours: '',
+        quality: 'Good',
+        datetime: '', // Added datetime field
+        comment: '',
+        type: 'Sleep',
+    });
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setSleepData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        inputSubmit(sleepData); // Callback to pass the data to the parent component
+        
+    };
+
     return (
         <div className={styles.formRender}>
             <h3>Sleep Tracking</h3>
-            <form>
+            <form className={styles.formContainer} onSubmit={handleSubmit}>
                 <label>
                     Hours of Sleep:
-                    <input type="number" placeholder="Hours slept" />
+                    <input
+                        type="number"
+                        name="hours"
+                        placeholder="Hours of sleep"
+                        value={sleepData.hours}
+                        onChange={handleInputChange}
+                    />
                 </label>
                 <br />
                 <label>
-                    Sleep Quality (1-10):
-                    <input type="number" min="1" max="10" placeholder="Quality" />
+                    Quality of Sleep:
+                    <select
+                        name="quality"
+                        value={sleepData.quality}
+                        onChange={handleInputChange}
+                    >
+                        <option>Good</option>
+                        <option>Fair</option>
+                        <option>Poor</option>
+                    </select>
                 </label>
                 <br />
                 <label>
-                    Any disturbances? (e.g., waking up at night):
-                    <input type="text" placeholder="Disturbances" />
+                    Datetime:
+                    <input
+                        type="datetime-local" // Use datetime-local input type
+                        name="datetime"
+                        value={sleepData.datetime}
+                        onChange={handleInputChange}
+                    />
                 </label>
                 <br />
                 <label>
-                    How did you feel upon waking?:
-                    <input type="text" placeholder="Feelings upon waking" />
+                    Comment:
+                    <input
+                        type="text"
+                        name="comment"
+                        placeholder="Additional comments"
+                        value={sleepData.comment}
+                        onChange={handleInputChange}
+                    />
                 </label>
                 <br />
-                <button type="submit">Submit</button>
+                <button className={styles.submitButton} type="submit">
+                    Submit
+                </button>
             </form>
         </div>
     );

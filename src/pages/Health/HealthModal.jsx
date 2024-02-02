@@ -9,7 +9,7 @@ import SupplementsFormComponent from "./forms/SupplementsForm";
 
 
 
-const ModalForm = ({ isOpen, onClose, onHealthInputAdded }) => {
+const HealthModal = ({ isOpen, inputSubmit, onClose}) => {
   const [selectedForm, setSelectedForm] = useState("Exercise");
 
   const handleFormSelection = (form) => {
@@ -19,13 +19,13 @@ const ModalForm = ({ isOpen, onClose, onHealthInputAdded }) => {
   const renderForm = () => {
     switch (selectedForm) {
       case "Exercise":
-        return <ExerciseFormComponent onExerciseSubmit={onHealthInputAdded}/>;
+        return <ExerciseFormComponent inputSubmit={inputSubmit} />;
       case "Diet":
-        return <DietFormComponent />;
+        return <DietFormComponent inputSubmit={inputSubmit} />;
       case "Sleep":
-        return <SleepFormComponent />;
+        return <SleepFormComponent inputSubmit={inputSubmit} />;
       case "Supplements":
-        return <SupplementsFormComponent />;
+        return <SupplementsFormComponent inputSubmit={inputSubmit} />;
       default:
         return null;
     }
@@ -54,4 +54,4 @@ const ModalForm = ({ isOpen, onClose, onHealthInputAdded }) => {
   );
 };
 
-export default ModalForm;
+export default HealthModal;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
-import MySidebar from "./components/sidebar";
+import MySidebar from "./components/MySidebar";
 import { lazy } from "react";
 
 // *** Pages *** //

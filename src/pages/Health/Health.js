@@ -7,10 +7,8 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   color: white;
-  display: flex;
   z-index: 0;
   padding: 0 15px 15px 0;
-  flex-direction: column;
 `;
 
 const StyledButton = styled.button`
@@ -33,11 +31,50 @@ const Title = styled.h1`
   color: white;
 `;
 
+const formColors = {
+  'Exercise': 'blue',
+  'Diet': 'green',
+  'Sleep': 'red',
+  'Supplements': 'purple',
+};
+
+const Circle = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: ${(props) => props.color};
+  margin-right: 10px;
+`;
+
+function renderFactorByType(item) {
+  const color = formColors[item.type] || 'sleek-blue'; // Default to sleek blue if type not found
+  return (
+    <Factor>
+      <Circle color={color} />
+      <div>
+        <h3>{item.type} Factor</h3>
+        <p>Type of {item.type}: {item[item.type.toLowerCase() + 'Type']}</p>
+        <p>Datetime: {item.datetime}</p>
+        {/* Include rendering for other properties here */}
+      </div>
+    </Factor>
+  );
+}
+
 const healthInputs = [
   
 ];
 
-const Factor = styled.div``;
+const Factor = styled.div`
+  float: left;
+  display: flex;
+  background-color: #15215d;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  align-items: center; /* Center vertically */
+`;
 
 function Health() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -53,8 +90,9 @@ function Health() {
   };
 
 
-  const addHealthInput = (newInput) => {
+  const addInput = (newInput) => {
     setData((prevData) => [...prevData, newInput]);
+    closeModal();
   };
 
 
@@ -70,10 +108,8 @@ function Health() {
       <Wrapper>
         {data ? (
 
-          healthInputs.map((item) => 
-            
-              <p>{`${item}`}</p>
-            
+          data.map((item) => 
+            renderFactorByType(item)
           )
           // Object.keys(data).map((item) => (
           //   <Factor className={`card intense-${item.maxedOut}`}>
@@ -114,10 +150,9 @@ function Health() {
       <HealthModal
         isOpen={modalOpen}
         onClose={closeModal}
-        onHealthInputAdded={addHealthInput}
+        inputSubmit={addInput}
         //onEventAdded={(event) => onEventAdded(event)}
         //addPicture={(item) => addPicture(item)}
-        transfer={(item) => setData(item)}
       ></HealthModal>
     </>
   );

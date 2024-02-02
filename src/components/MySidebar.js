@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import { Link } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 // ****Icons****
@@ -14,7 +13,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import CreateIcon from '@mui/icons-material/Create';
+import CreateIcon from "@mui/icons-material/Create";
 
 const StyledSidebar = styled(Sidebar)`
   position: relative;
@@ -22,18 +21,17 @@ const StyledSidebar = styled(Sidebar)`
   height: 100%;
   z-index: 0;
   ::-webkit-scrollbar {
-  width: 5px;
+    width: 5px;
   }
 
   ::-webkit-scrollbar-thumb {
-  background: rgb(153 153 153 / 0.27);
-  opacity: .01;
-  border-radius: 10px;
- }
+    background: rgb(153 153 153 / 0.27);
+    opacity: 0.01;
+    border-radius: 10px;
+  }
 
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
-    
   }
 `;
 
@@ -56,16 +54,52 @@ const StyledMenu = styled(Menu)`
       margin: none;
     }
   }
+  
 `;
 
 const StyledMenuItem = styled(MenuItem)``;
 
 const MySidebar = () => {
   const [collapsed, setCollapsed] = useState(true);
+  const location = useLocation();
   const [active, setActive] = useState("Dashboard");
+
+  useEffect(() => {
+    const storedActiveCategory = localStorage.getItem("activeCategory");
+    if (storedActiveCategory) {
+      setActive(storedActiveCategory);
+    }
+  }, []);
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
+  };
+
+  const handleMenuItemClick = (category) => {
+    setActive(category);
+    localStorage.setItem("activeCategory", category);
+  };
+
+  useEffect(() => {
+    const pathname = location.pathname;
+    const category = getCategoryFromPath(pathname);
+    if (category) {
+      setActive(category);
+    }
+  }, [location.pathname]);
+
+  const getCategoryFromPath = (pathname) => {
+    const categoryMap = {
+      "/": "Dashboard",
+      "/Readings": "Readings",
+      "/Calendar": "Calendar",
+      "/Pictures": "Pictures",
+      "/Health": "Health",
+      "/Financials": "Financials",
+      "/Todo": "Todo",
+      "/Journal": "Journal",
+    };
+    return categoryMap[pathname];
   };
 
   return (
@@ -102,6 +136,7 @@ const MySidebar = () => {
             }
           },
         }}
+        className="rps-sidebar"
       >
         <SubMenu
           className="sub"
@@ -112,73 +147,81 @@ const MySidebar = () => {
           <StyledMenuItem className="sub"> Account </StyledMenuItem>
         </SubMenu>
         <StyledMenuItem
-          onClick={() => setActive("Dashboard")}
+          onClick={() => handleMenuItemClick("Dashboard")}
           active={active === "Dashboard"}
           component={<Link to="/" />}
           icon={<DashboardIcon />}
+          className="rps-menu-item"
         >
           {" "}
           {collapsed ? "" : <span>Dashboard</span>}{" "}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => setActive("Readings")}
+          onClick={() => handleMenuItemClick("Readings")}
           active={active === "Readings"}
           component={<Link to="/Readings" />}
           icon={<ImportContactsIcon />}
+          className="rps-menu-item"
         >
           {" "}
           {collapsed ? "" : <span>Readings</span>}{" "}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => setActive("Calendar")}
+          onClick={() => handleMenuItemClick("Calendar")}
           active={active === "Calendar"}
           component={<Link to="/Calendar" />}
           icon={<EventIcon />}
+          className="rps-menu-item"
         >
           {" "}
           {collapsed ? "" : <span>Calendar</span>}{" "}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => setActive("Pictures")}
+          onClick={() => handleMenuItemClick("Pictures")}
           active={active === "Pictures"}
           component={<Link to="/Pictures" />}
           icon={<PhotoSizeSelectActualIcon />}
+          className="rps-menu-item"
         >
           {" "}
           {collapsed ? "" : <span>Pictures</span>}{" "}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => setActive("Health")}
+          onClick={() => handleMenuItemClick("Health")}
           active={active === "Health"}
           component={<Link to="/Health" />}
           icon={<FavoriteIcon />}
+          className="rps-menu-item"
         >
           {" "}
           {collapsed ? "" : <span>Health</span>}{" "}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => setActive("Financials")}
+          onClick={() => handleMenuItemClick("Financials")}
           active={active === "Financials"}
           component={<Link to="/Financials" />}
           icon={<AttachMoneyIcon />}
+          className="rps-menu-item"
         >
           {" "}
           {collapsed ? "" : <span>Financials</span>}{" "}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => setActive("Todo")}
+          onClick={() => handleMenuItemClick("Todo")}
           active={active === "Todo"}
           component={<Link to="/Todo" />}
           icon={<CheckBoxIcon />}
+          className="rps-menu-item"
         >
           {" "}
           {collapsed ? "" : <span>Todo</span>}{" "}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => setActive("Journal")}
+          onClick={() => handleMenuItemClick("Journal")}
           active={active === "Journal"}
           component={<Link to="/Journal" />}
           icon={<CreateIcon />}
+          className="rps-menu-item"
         >
           {" "}
           {collapsed ? "" : <span>Journal</span>}{" "}

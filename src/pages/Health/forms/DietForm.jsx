@@ -1,39 +1,79 @@
-import React from 'react';
-import styles from '../Modal.module.scss'
+import React, { useState } from 'react';
+import styles from '../Modal.module.scss';
 
+const DietForm = ({ inputSubmit }) => {
+    const [dietData, setDietData] = useState({
+        meal: '',
+        calories: '',
+        datetime: '', // Added datetime field
+        comment: '',
+        type: 'Diet',
+    });
 
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setDietData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
-const DietForm = () => {
-
-    const onSubmit = () => {
-        preventDefault()
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        inputSubmit(dietData); // Callback to pass the data to the parent component
         
     };
+
     return (
         <div className={styles.formRender}>
             <h3>Diet Tracking</h3>
-            <form onSubmit={() => onSubmit()}>
+            <form className={styles.formContainer} onSubmit={handleSubmit}>
                 <label>
-                    Meal Type (Breakfast/Lunch/Dinner/Snack):
-                    <input type="text" placeholder="Meal Type" />
+                    Meal:
+                    <input
+                        type="text"
+                        name="meal"
+                        placeholder="e.g., Breakfast, Lunch, Dinner"
+                        value={dietData.meal}
+                        onChange={handleInputChange}
+                    />
                 </label>
                 <br />
                 <label>
-                    Food Items:
-                    <textarea placeholder="List of foods consumed" />
+                    Calories:
+                    <input
+                        type="number"
+                        name="calories"
+                        placeholder="Calories"
+                        value={dietData.calories}
+                        onChange={handleInputChange}
+                    />
                 </label>
                 <br />
                 <label>
-                    Portion Size:
-                    <input type="text" placeholder="Portion size" />
+                    Datetime:
+                    <input
+                        type="datetime-local" // Use datetime-local input type
+                        name="datetime"
+                        value={dietData.datetime}
+                        onChange={handleInputChange}
+                    />
                 </label>
                 <br />
                 <label>
-                    How did you feel after eating?:
-                    <input type="text" placeholder="Feelings after meal" />
+                    Comment:
+                    <input
+                        type="text"
+                        name="comment"
+                        placeholder="Additional comments"
+                        value={dietData.comment}
+                        onChange={handleInputChange}
+                    />
                 </label>
                 <br />
-                <button type="submit">Submit</button>
+                <button className={styles.submitButton} type="submit">
+                    Submit
+                </button>
             </form>
         </div>
     );

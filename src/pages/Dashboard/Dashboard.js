@@ -26,7 +26,7 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     transition: all .07s ease-in-out;
-
+    border-radius: 10px;
     &:hover{
       transform: scale(1.02);
     }

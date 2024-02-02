@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import styles from '../Modal.module.scss';
 
-const ExerciseForm = ({ onExerciseSubmit }) => {
+const ExerciseForm = ({ inputSubmit }) => {
     const [exerciseData, setExerciseData] = useState({
         typeOfExercise: '',
         duration: '',
         intensity: 'Low',
         feelingsAfterwards: '',
+        datetime: '', // Added datetime field
+        type: 'Exercise', // Add the form name here
     });
 
     const handleInputChange = (event) => {
@@ -19,7 +21,7 @@ const ExerciseForm = ({ onExerciseSubmit }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onExerciseSubmit(exerciseData); // Callback to pass the data to the parent component
+        inputSubmit(exerciseData); // Callback to pass the data to the parent component
     };
 
     return (
@@ -68,6 +70,16 @@ const ExerciseForm = ({ onExerciseSubmit }) => {
                         name="feelingsAfterwards"
                         placeholder="Feelings after exercise"
                         value={exerciseData.feelingsAfterwards}
+                        onChange={handleInputChange}
+                    />
+                </label>
+                <br />
+                <label>
+                    Datetime:
+                    <input
+                        type="datetime-local" // Use datetime-local input type
+                        name="datetime"
+                        value={exerciseData.datetime}
                         onChange={handleInputChange}
                     />
                 </label>
