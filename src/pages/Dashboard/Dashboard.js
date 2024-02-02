@@ -58,8 +58,8 @@ function Dashboard() {
         <div className="part health"><StyledLink to='/Health'>health</StyledLink></div>
         <div className="part todo"><StyledLink to='/Todo'>todo</StyledLink></div>
         <div className="part journal"><StyledLink to='/Journal'>journal</StyledLink></div>
-        <div className="part "></div>
-        <div className="part "></div>
+        <div className="part "> free space 1</div>
+        <div className="part "> free space 2</div>
       </Wrapper>
     </React.Fragment>
   );
