@@ -4,8 +4,8 @@ import HealthModal from "./HealthModal";
 import "animate.css";
 
 const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
   color: white;
   z-index: 0;
   padding: 0 15px 15px 0;

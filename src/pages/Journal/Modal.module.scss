@@ -1,0 +1,20 @@
+.Modal {
+  /* Modal styles go here */
+  height: auto;
+  width: 900px;
+  padding: 15px;
+  background-color: red;
+
+}
+
+.Overlay {
+  /* Overlay styles go here */
+  height: 100%;
+  width: 100%;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.452); // Semi-transparent overlay
+  position: absolute;
+  top: 0;
+}

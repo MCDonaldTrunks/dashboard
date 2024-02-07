@@ -9,7 +9,7 @@ import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 
-export default function Component() {
+export default function Form() {
   return (
     <Card className="max-w-2xl mx-auto my-10 p-6 bg-white rounded-xl shadow-md space-y-6">
       <CardHeader>

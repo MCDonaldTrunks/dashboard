@@ -4,8 +4,8 @@ import styled from "styled-components";
 import PicturesModal from "./PicturesModal";
 
 const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
   color: white;
   display: flex;
   z-index: 0;
@@ -130,18 +130,7 @@ function Pictures(props) {
             </Picturebox>
           )}
         </div>
-        <input
-          type="file"
-          id="myfile"
-          //value={picture ? picture : null}
-          name="myfile"
-          onChange={(e) => {
-            console.log('onChange input func')
-            setPicture(e.target.files[0]);
-            console.log(e.target.files)
-            console.log(picture);
-          }}
-        ></input>
+       
         <div className="pictures"></div>
       </Wrapper>
       <PicturesModal

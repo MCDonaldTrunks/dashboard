@@ -1,6 +1,6 @@
 // JournalEntryForm.js
 import React, { useState } from "react";
-import styles from "./Journal.module.scss";
+import styles from "./Modal.module.scss";
 import Modal from "react-modal";
 
 const JournalEntryForm = ({ isOpen, onClose, onSubmit, onCancel }) => {
@@ -8,7 +8,8 @@ const JournalEntryForm = ({ isOpen, onClose, onSubmit, onCancel }) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     onSubmit({ date, title, text });
     setDate("");
     setTitle("");
@@ -19,13 +20,11 @@ const JournalEntryForm = ({ isOpen, onClose, onSubmit, onCancel }) => {
     <Modal
       isOpen={isOpen}
       onRequestClose={onClose}
-      overlayClassName={styles.overlay}
-      className={styles.content}
+      className={styles.Modal}
+      overlayClassName={styles.Overlay}
     >
       <h2>Add Journal Entry</h2>
       <form>
-        
-
         <label>Date:</label>
         <input
           type="date"

@@ -9,8 +9,7 @@ import CalendarAddEventModal from "./CalendarAddEventModal";
 import multiMonthplugin from "@fullcalendar/multimonth";
 
 const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  flex: 1;
   display: flex;
   z-index: 0;
   padding: 0 15px 15px 0;

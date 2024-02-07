@@ -3,11 +3,15 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Title = styled.h1`
-  font-size: 30px;
-  color: black;
-  padding: 10px;
-  font-family: "Roboto", sans-serif;
+font-size: 30px;
+margin-bottom: 20px;
+color: white;
 `;
+
+
+
+
+
 
 const Wrapper = styled.div`
   width: 100%;
@@ -19,6 +23,7 @@ const Wrapper = styled.div`
   grid-template-rows: repeat(3, 1fr);
   grid-column-gap: 30px;
   grid-row-gap: 30px;
+  padding: 0 15px 15px 0;
 
   .part {
     border: solid 1px #d5d8e6;
