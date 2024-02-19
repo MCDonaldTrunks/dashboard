@@ -4,6 +4,8 @@ import styled from "styled-components";
 import MySidebar from "./components/MySidebar";
 import { lazy } from "react";
 
+
+
 // *** Pages *** //
 import Readings from "./pages/Readings/Readings";
 import Dashboard from "./pages//Dashboard/Dashboard";
@@ -17,6 +19,7 @@ import Journal from "./pages/Journal/Journal";
 
 //const Component = lazy(() => import('./pages/Dashboard'));
 
+const chatgptkey = "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"
 function App() {
   return (
     <Container>
