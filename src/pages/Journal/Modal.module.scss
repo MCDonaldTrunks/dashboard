@@ -1,20 +1,70 @@
+// Modal.module.scss
 .Modal {
-  /* Modal styles go here */
-  height: auto;
-  width: 900px;
+  height: 90%;
+  width: 80%;
   padding: 15px;
-  background-color: red;
+  background-color: rgb(212, 212, 212);
+  min-height: 300px; /* Added minHeight */
+  border-radius: 10px;
+  h2{
+    padding: 15px 0;
+  }
 
+  .form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .buttons{
+      width: 200px;
+      display: flex;
+      flex-direction: row;
+  
+      button {
+        width: 200px;
+      }
+    }
+  }
+
+  .formGroup {
+    display: flex;
+    margin-bottom: 10px;
+    margin: 0 auto;
+
+    label {
+      margin-right: 10px;
+    }
+
+    input[type="date"],
+    input[type="text"] {
+      width: 200px;
+      vertical-align: middle;
+    }
+  }
+
+  .mainText {
+    height: 80%;
+    padding: 15px 0;
+    margin-bottom: 15px;
+  }
+
+  .textarea {
+    padding: 0 15px;
+    width: 100%;
+    height: 100%;/* Added minHeight */
+    background-color: rgb(107, 107, 107);
+  }
+
+  
 }
 
 .Overlay {
-  /* Overlay styles go here */
   height: 100%;
   width: 100%;
   display: flex !important;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.452); // Semi-transparent overlay
+  background-color: rgba(0, 0, 0, 0.452);
   position: absolute;
   top: 0;
 }

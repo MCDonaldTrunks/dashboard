@@ -111,38 +111,7 @@ function Health() {
           data.map((item) => 
             renderFactorByType(item)
           )
-          // Object.keys(data).map((item) => (
-          //   <Factor className={`card intense-${item.maxedOut}`}>
-          //     <h3>
-          //       Type: {`${healthInputs[item].type}`}
-          //       <span id="type"></span>
-          //     </h3>
-          //     <p>
-          //       Title: {`${healthInputs[item].inputTitle}`}
-          //       <span id="inputTitle"></span>
-          //     </p>
-          //     <p>
-          //       Datetime: {`${healthInputs[item].datetime}`}
-          //       <span id="datetime"></span>
-          //     </p>
-          //     <p>
-          //       Maxed Out: {`${healthInputs[item].maxedOut}`}
-          //       <span id="maxedOut"></span>
-          //     </p>
-          //     <p>
-          //       Type 2: {`${healthInputs[item].type2}`}
-          //       <span id="type2"></span>
-          //     </p>
-          //     <p>
-          //       Amount: {`${healthInputs[item].amount}`}
-          //       <span id="amount"></span>
-          //     </p>
-          //     <p>
-          //       Comment: {`${healthInputs[item].comment}`}
-          //       <span id="comment"></span>
-          //     </p>
-          //   </Factor>
-          // ))
+          
         ) : (
           <h3> Error no data found</h3>
         )}
