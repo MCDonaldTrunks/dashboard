@@ -56,15 +56,15 @@ const FinancialsModal = ({ isOpen, onClose, onSubmit, selectedEntry }) => {
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGroup}>
           <label>Date:</label>
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+          <input type="date" required value={date} onChange={(e) => setDate(e.target.value)} />
         </div>
         <div className={styles.formGroup}>
           <label>Category:</label>
-          <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
+          <input type="text" required value={category} onChange={(e) => setCategory(e.target.value)} />
         </div>
         <div className={styles.formGroup}>
           <label>Amount:</label>
-          <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
+          <input type="number" required value={amount} onChange={(e) => setAmount(e.target.value)} />
         </div>
         <div className={styles.formGroup}>
           <label>Expense:</label>
@@ -72,7 +72,7 @@ const FinancialsModal = ({ isOpen, onClose, onSubmit, selectedEntry }) => {
         </div>
         <div className={styles.formGroup}>
           <label>Notes:</label>
-          <textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
+          <textarea value={notes} rows={6} onChange={(e) => setNotes(e.target.value)} />
         </div>
         <button type="submit" className={styles.submitButton}>{selectedEntry ? 'Update' : 'Add'} Entry</button>
       </form>

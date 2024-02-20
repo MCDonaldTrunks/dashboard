@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useState } from "react";
-
-import ReadingsAddReadingModal from "./ReadingsAddReadingModal";
+import ReadingsModal from "./ReadingsModal";
 
 const StyledButton = styled.button`
   width: 100px;
@@ -25,78 +23,109 @@ const Title = styled.h1`
 `;
 
 const Wrapper = styled.div`
-  width: auto;
-  height: auto;
-  color: white;
   display: flex;
+  width: 100%;
+  padding: 10px;
 `;
 
-const bookObject = {
-  title: "",
-  author: "",
-  description: "",
-  image: "",
-  link: "",
-  releaseDate: "",
-  notes: [{ note1: "", note2: "", note3: "", note4: "" }],
-  report: "",
-};
-
-const books = [
-  {
-    title: "Mastery",
-    author: "Robert Greene",
-    image: "https://i.ebayimg.com/images/g/SaAAAOSwVFNf~qpd/s-l500.jpg",
-    releaseDate: "November 13, 2012",
-  },
-  {
-    title: "Mastery",
-    author: "Robert Greene",
-    image: "https://i.ebayimg.com/images/g/SaAAAOSwVFNf~qpd/s-l500.jpg",
-    releaseDate: "November 13, 2012",
-  },
-];
-
+const EntryCardsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+  width: 66%;
+`;
 
 const BookItem = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   height: 300px;
-  width: 120px;
-  margin-right: 20px; 
-`
+  width: 200px;
+  background-color: #27496d;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+`;
 
+const DetailsSection = styled.div`
+  width: 33%;
+  padding: 10px;
+  background-color: #1e2a45; // A slightly different shade for contrast
+  color: white;
+  border-radius: 8px;
+  margin-left: auto; // Push to the right
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
 function Readings() {
   const [modalOpen, setModalOpen] = useState(false);
-  const onDataAdded = (data) => {
-    console.log(data);
-    books.push(data);
+  const [books, setBooks] = useState([]);
+  const [selectedBook, setSelectedBook] = useState(null);
+
+  const addOrUpdateBook = (book) => {
+    if (selectedBook) {
+      const updatedBooks = books.map((b) => (b.key === selectedBook.key ? { ...book, key: selectedBook.key } : b));
+      setBooks(updatedBooks);
+    } else {
+      const key = getNextKey();
+      setBooks([...books, { ...book, key }]);
+    }
+    setSelectedBook(null);
+    setModalOpen(false);
+  };
+
+  const deleteBook = (key) => {
+    setBooks(books.filter((book) => book.key !== key));
+    setSelectedBook(null);
+  };
+
+  const openModalToAddOrUpdate = (book) => {
+    setSelectedBook(book);
+    setModalOpen(true);
+  };
+
+  const getNextKey = () => {
+    return books.length ? String(Math.max(...books.map((book) => parseInt(book.key))) + 1).padStart(5, '0') : '00001';
   };
 
   return (
     <>
       <Title>Readings</Title>
-      <StyledButton onClick={() => setModalOpen(true)}>Add Book</StyledButton>
+      <StyledButton onClick={() => openModalToAddOrUpdate()}>Add Book</StyledButton>
       <Wrapper>
-        {books.map((book) => {
-          return (
-            <BookItem key={book.title}>
-              <img src={book.image} alt={book.title} />
+        <EntryCardsContainer>
+          {books.map((book) => (
+            <BookItem key={book.key} onClick={() => setSelectedBook(book)}>
+              <img src={book.image} alt={book.title} style={{ width: "100%", height: "auto", borderRadius: "4px" }} />
               <h3>{book.title}</h3>
               <p>{book.author}</p>
-          
             </BookItem>
-          );
-        })} 
-        
+          ))}
+        </EntryCardsContainer>
+        {selectedBook && (
+          <DetailsSection>
+            <img src={selectedBook.image} alt={selectedBook.title} style={{ width: "100%", height: "auto", borderRadius: "4px" }} />
+            <h3>{selectedBook.title}</h3>
+            <p>Author: {selectedBook.author}</p>
+            {/* Display other selected book details here */}
+            <StyledButton onClick={() => openModalToAddOrUpdate(selectedBook)}>Edit</StyledButton>
+            <StyledButton onClick={() => deleteBook(selectedBook.key)}>Delete</StyledButton>
+          </DetailsSection>
+        )}
       </Wrapper>
-
-      <ReadingsAddReadingModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onDataAdded={(data) => onDataAdded(data)}
-      ></ReadingsAddReadingModal>
+      {modalOpen && (
+        <ReadingsModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          onBookSubmit={addOrUpdateBook}
+          selectedBook={selectedBook}
+        />
+      )}
     </>
   );
 }
