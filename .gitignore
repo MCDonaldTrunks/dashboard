@@ -1,18 +1,72 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
+# Ignore Python bytecode and cache
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.pyd
+*.db
 
-# dependencies
-/node_modules
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
+# Ignore Django secret key and settings
+*.env
 .env
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
+# Ignore virtual environment
+venv/
+.env/
+.venv/
+env/
+ENV/
+
+# Ignore Django migration files
+backend/dashboard/migrations/
+
+# Ignore SQLite database
+db.sqlite3
+
+# Ignore Django static files
+backend/static/
+backend/media/
+
+# Ignore node_modules directory
+frontend/node_modules/
+
+# Ignore build directory for React
+frontend/build/
+
+# Ignore dependency directories
+node_modules/
+jspm_packages/
+
+# Ignore log files
+*.log
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore coverage reports
+htmlcov/
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Ignore temporary files
+*.swp
+*.swo
+*.bak
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Ignore compiled files
+*.out
+*.o
+*.class
+*.dll
+*.so
+*.dylib
