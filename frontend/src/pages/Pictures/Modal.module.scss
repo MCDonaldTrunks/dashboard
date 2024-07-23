@@ -1,0 +1,32 @@
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.541);
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin: auto;
+    background-color: transparent;
+    font-size: 25px;
+  
+    input {
+      font-size: 25px;
+      border: none;
+      margin-bottom: 10px;
+    }
+  
+    .modal-button {
+      font-size: 25px;
+      padding: 1rem;
+    }
+  }

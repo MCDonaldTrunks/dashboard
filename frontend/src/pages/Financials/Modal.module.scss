@@ -1,0 +1,70 @@
+// Modal.module.scss
+.Modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .Overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+  button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #1c244b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: #313f83;
+    }
+  }
+  
+  input[type="date"],
+  input[type="text"],
+  input[type="number"],
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+  }
+  
+
+  // Assuming existing styles remain, adding or ensuring .submitButton is styled
+.submitButton {
+  // Add your submit button styling here if not already done
+  padding: 10px 20px;
+  background-color: #1c244b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #313f83;
+  }
+}
+
+// No specific changes for scrollbar within the modal, as it applies to the sections in Financials.js
+// Add or adjust styles here based on your specific design needs

@@ -1,0 +1,95 @@
+.modal {
+  // General styling for the modal overlay
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.452); // Semi-transparent overlay
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+
+  .content {
+    width: 100%;
+    max-width: 500px;
+    height: 700px; /* Add a fixed height here */
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.384);
+    border-radius: 10px;
+
+    div:not[className = "formSelection"] {
+      height: 100%;
+    }
+//******************************** submit button ********************************
+    button[type="submit"] {
+      width:fit-content;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: auto; /* Add spacing between content and submit button */
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+
+  .formContainer{
+    height: calc(100% - 60px); //  calc operators are for adjusting the effected elements with padding space
+  }
+
+  form, .formRender{
+    height: calc(100% - 20px);
+  }
+
+  form{
+    display: flex;
+    flex-direction: column;
+  }
+
+  button {
+    // Styling for buttons
+    background-color: #007bff; // Example: Blue background
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: #0056b3; // Darker blue on hover
+    }
+  }
+
+  label {
+    // Styling for labels
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  input,
+  textarea,
+  select {
+    // Styling for form inputs
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  h3 {
+    // Styling for heading
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .formSelection {
+    height: 60px;
+    
+  }
+}
