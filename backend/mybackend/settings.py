@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'userauths',
     'corsheaders',
     'workouts',
-    
+    #other apps
+    'rest_framework',    
 ]
 
 MIDDLEWARE = [

@@ -40,3 +40,17 @@ tzdata==2023.3
 uritemplate==4.1.1
 urllib3==1.26.18
 moviepy==1.0.3
+
+
+
+
+
+
+
+
+# CREATE DATABASE dashboard_db;
+# CREATE USER juicypope WITH PASSWORD 'Falconpunch_1';
+# ALTER ROLE juicypope SET client_encoding TO 'utf8';
+# ALTER ROLE juicypope SET default_transaction_isolation TO 'read committed';
+# ALTER ROLE juicypope SET timezone TO 'UTC';
+# GRANT ALL PRIVILEGES ON DATABASE dashboard_db TO juicypope;

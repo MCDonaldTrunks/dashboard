@@ -21,9 +21,11 @@ from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('workouts.urls')),
 ]
 
 
 urlpatterns += i18n_patterns(
     path('set_language/', include('django.conf.urls.i18n')),
+    
 )
