@@ -1,0 +1,133 @@
+"""
+URL configuration for mybackend project.
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/5.0/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path, include
+from django.conf.urls.i18n import i18n_patterns
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+
+
+urlpatterns += i18n_patterns(
+    path('set_language/', include('django.conf.urls.i18n')),
+    Great! Now that your migrations are applied and the admin interface is working, the next step is to create serializers for your models. Serializers are used to convert model instances to JSON, which can then be sent to the frontend (React in your case) via API endpoints.
+
+### 1. **Create Serializers**
+
+You'll need to create a new file called `serializers.py` in the `workouts` app. This file will contain serializers for both the `Workout` and `WorkoutRecord` models.
+
+#### Step 1: Create the `serializers.py` File
+
+- **File Path:** `workouts/serializers.py`
+- **Code to Add:**
+  ```python
+  from rest_framework import serializers
+  from .models import Workout, WorkoutRecord
+
+  class WorkoutSerializer(serializers.ModelSerializer):
+      class Meta:
+          model = Workout
+          fields = '__all__'
+
+  class WorkoutRecordSerializer(serializers.ModelSerializer):
+      class Meta:
+          model = WorkoutRecord
+          fields = '__all__'
+  ```
+
+### 2. **Set Up API Views**
+
+Next, you’ll create views that will use these serializers to serve the data via API endpoints. This will allow your React frontend to fetch and interact with the workout data.
+
+#### Step 2: Update `views.py` with API Views
+
+- **File Path:** `workouts/views.py`
+- **Code to Add:**
+  ```python
+  from rest_framework import viewsets
+  from .models import Workout, WorkoutRecord
+  from .serializers import WorkoutSerializer, WorkoutRecordSerializer
+
+  class WorkoutViewSet(viewsets.ModelViewSet):
+      queryset = Workout.objects.all()
+      serializer_class = WorkoutSerializer
+
+  class WorkoutRecordViewSet(viewsets.ModelViewSet):
+      queryset = WorkoutRecord.objects.all()
+      serializer_class = WorkoutRecordSerializer
+  ```
+
+### 3. **Set Up URLs for the API**
+
+You'll need to connect these views to URL endpoints so that your React frontend can access them.
+
+#### Step 3: Create/Update `urls.py` for the Workouts App
+
+If you haven't already created a `urls.py` file in the `workouts` app, you'll need to create one. Then, you’ll set up the URLs for your API views.
+
+- **File Path:** `workouts/urls.py` (Create this file if it doesn't exist)
+- **Code to Add:**
+  ```python
+  from django.urls import path, include
+  from rest_framework.routers import DefaultRouter
+  from .views import WorkoutViewSet, WorkoutRecordViewSet
+
+  router = DefaultRouter()
+  router.register(r'workouts', WorkoutViewSet)
+  router.register(r'workout-records', WorkoutRecordViewSet)
+
+  urlpatterns = [
+      path('api/', include(router.urls)),
+  ]
+  ```
+
+#### Step 4: Include the `workouts` URLs in the Project’s `urls.py`
+
+Finally, make sure the `workouts` app’s URLs are included in your project's main `urls.py`.
+
+- **File Path:** `mybackend/urls.py` (This path might vary based on your project structure)
+- **Code to Add:**
+  ```python
+  from django.urls import path, include
+
+  urlpatterns = [
+      # other URL patterns
+      path('', include('workouts.urls')),
+  ]
+  ```
+
+### 4. **Test the API**
+
+After setting up the serializers, views, and URLs, you should test the API endpoints to ensure they are working correctly. You can use tools like Postman, cURL, or even a browser to send GET requests to your endpoints, like:
+
+- **For Workouts:**
+  - `http://localhost:8000/api/workouts/`
+- **For Workout Records:**
+  - `http://localhost:8000/api/workout-records/`
+
+### 5. **Next Steps with React**
+
+Once the API is tested and confirmed to be working, you can start working on the React frontend. This will involve:
+
+- Setting up components to fetch and display data from your API.
+- Handling user input to add or update records via the API.
+- Implementing any additional features such as authentication, filtering, and more.
+
+Would you like to proceed with the React setup, or is there anything else you need help with on the Django side?
+)

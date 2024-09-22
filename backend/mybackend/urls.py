@@ -17,11 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
+from django.http import HttpResponse
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('workouts.urls')),
+    path('auth/', include('userauths.urls')),
+    path('', lambda request: HttpResponse("Hello, this is the root path!")),
+    
 ]
 
 
