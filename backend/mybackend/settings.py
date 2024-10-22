@@ -11,24 +11,23 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta  # Used for JWT settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# ==========================
+# GENERAL SETTINGS
+# ==========================
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+# Security settings
 SECRET_KEY = 'django-insecure-b1h72&#otpxt(s)dhnp66va=(zj1@s844og9amgx)()j&gs($e'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
-
-# Application definition
+# ==========================
+# APPLICATION DEFINITION
+# ==========================
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -40,29 +39,23 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dashboard',
     'userauths',
-    
     'workouts',
-    #other apps
-    'rest_framework',
-    'rest_framework_simplejwt',   
-    'corsheaders', 
+    # Third-party apps
+    'rest_framework',  # Django REST Framework
+    'rest_framework_simplejwt',  # JWT Authentication
+    'corsheaders',  # CORS headers
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Moved CORS middleware above CSRF middleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',  # Ensure CSRF comes after CORS
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    
-]
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',  # Adjust based on your React server port
 ]
 
 ROOT_URLCONF = 'mybackend.urls'
@@ -85,9 +78,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mybackend.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+# ==========================
+# DATABASE CONFIGURATION
+# ==========================
 
 DATABASES = {
     'default': {
@@ -100,9 +93,12 @@ DATABASES = {
     }
 }
 
+# ==========================
+# AUTHENTICATION SETTINGS
+# ==========================
 
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
+# Custom user model
+AUTH_USER_MODEL = 'userauths.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -110,6 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 8,  # Minimum 8 characters
+        },
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -119,59 +118,60 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# ==========================
+# DJANGO REST FRAMEWORK CONFIGURATION
+# ==========================
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # Enable JWT globally
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',  # Global authentication enforced
     ),
 }
 
-
-# Simple JWT settings (optional, customize token lifetime if needed)
-from datetime import timedelta
-
+# Simple JWT settings (for token lifetime customization)
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
+# ==========================
+# CORS AND CSRF SETTINGS
+# ==========================
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',  # React frontend origin
 ]
 
-# Directory where collectstatic will place the collected files
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',  # Frontend domain for CSRF tokens
+]
+
+# ==========================
+# INTERNATIONALIZATION
+# ==========================
+
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_TZ = True
+
+# ==========================
+# STATIC FILES CONFIGURATION
+# ==========================
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'userauths.User'
-
-
-# jazzmin settings
+# ==========================
+# JAZZMIN ADMIN UI SETTINGS
+# ==========================
 
 JAZZMIN_SETTINGS = {
     "site_title": "My Admin",
@@ -180,36 +180,19 @@ JAZZMIN_SETTINGS = {
     "welcome_sign": "Welcome to My Admin",
     "copyright": "My Company",
     "user_avatar": None,
-
     # Top menu links
     "topmenu_links": [
         {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"name": "Support", "url": "https://support.example.com", "new_window": True},
     ],
-
     # Side menu
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
     },
-
-    # Custom icons for your models
-    "custom_css": None,
-    "custom_js": None,
-
-    # UI Tweaks
-   
-
-    # Admin Interface Text
-    "changeform_format": "horizontal_tabs",
-    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
-
-    # Additional configurations
-    "show_ui_builder": False,  # Show the UI builder to make customization easier
 }
 
-# Additional Jazzmin UI customization settings
 JAZZMIN_UI_TWEAKS = {
     "navbar_small_text": False,
     "footer_small_text": False,

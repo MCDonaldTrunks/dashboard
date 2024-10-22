@@ -1,7 +1,9 @@
 from django.db.models.signals import post_save
-from django.contrib.auth.models import User
 from django.dispatch import receiver
+from django.contrib.auth import get_user_model  # Import get_user_model to reference custom User model
 from .models import Profile
+
+User = get_user_model()  # Get the correct User model
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import logout from "./login/logout";
 
 // ****Icons****
 import MenuIcon from "@mui/icons-material/Menu";
@@ -14,6 +15,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CreateIcon from "@mui/icons-material/Create";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const StyledSidebar = styled(Sidebar)`
   position: relative;
@@ -54,15 +56,22 @@ const StyledMenu = styled(Menu)`
       margin: none;
     }
   }
-  
 `;
 
 const StyledMenuItem = styled(MenuItem)``;
 
+const LogOutButton = styled(MenuItem)`
+  color: #f05d5e;
+  &:hover {
+    background-color: #d8a47f;
+  }
+`;
+
 const MySidebar = () => {
   const [collapsed, setCollapsed] = useState(true);
   const location = useLocation();
-  const [active, setActive] = useState("Dashboard");
+  const navigate = useNavigate();
+  const [active, setActive] = useState("dashboard");
 
   useEffect(() => {
     const storedActiveCategory = localStorage.getItem("activeCategory");
@@ -78,6 +87,7 @@ const MySidebar = () => {
   const handleMenuItemClick = (category) => {
     setActive(category);
     localStorage.setItem("activeCategory", category);
+    navigate(`/${category}`);
   };
 
   useEffect(() => {
@@ -90,14 +100,14 @@ const MySidebar = () => {
 
   const getCategoryFromPath = (pathname) => {
     const categoryMap = {
-      "/": "Dashboard",
-      "/Readings": "Readings",
-      "/Calendar": "Calendar",
-      "/Pictures": "Pictures",
-      "/Health": "Health",
-      "/Financials": "Financials",
-      "/Todo": "Todo",
-      "/Journal": "Journal",
+      "/": "dashboard",
+      "/readings": "readings",
+      "/calendar": "calendar",
+      "/pictures": "pictures",
+      "/health": "health",
+      "/financials": "financials",
+      "/todo": "todo",
+      "/journal": "journal",
     };
     return categoryMap[pathname];
   };
@@ -147,85 +157,80 @@ const MySidebar = () => {
           <StyledMenuItem className="sub"> Account </StyledMenuItem>
         </SubMenu>
         <StyledMenuItem
-          onClick={() => handleMenuItemClick("Dashboard")}
-          active={active === "Dashboard"}
+          onClick={() => handleMenuItemClick("dashboard")}
+          active={active === "dashboard"}
           component={<Link to="/" />}
           icon={<DashboardIcon />}
           className="rps-menu-item"
         >
-          {" "}
-          {collapsed ? "" : <span>Dashboard</span>}{" "}
+          {collapsed ? "" : <span>Dashboard</span>}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => handleMenuItemClick("Readings")}
-          active={active === "Readings"}
-          component={<Link to="/Readings" />}
+          onClick={() => handleMenuItemClick("readings")}
+          active={active === "readings"}
+          component={<Link to="/readings" />}
           icon={<ImportContactsIcon />}
           className="rps-menu-item"
         >
-          {" "}
-          {collapsed ? "" : <span>Readings</span>}{" "}
+          {collapsed ? "" : <span>Readings</span>}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => handleMenuItemClick("Calendar")}
-          active={active === "Calendar"}
-          component={<Link to="/Calendar" />}
+          onClick={() => handleMenuItemClick("calendar")}
+          active={active === "calendar"}
+          component={<Link to="/calendar" />}
           icon={<EventIcon />}
           className="rps-menu-item"
         >
-          {" "}
-          {collapsed ? "" : <span>Calendar</span>}{" "}
+          {collapsed ? "" : <span>Calendar</span>}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => handleMenuItemClick("Pictures")}
-          active={active === "Pictures"}
-          component={<Link to="/Pictures" />}
+          onClick={() => handleMenuItemClick("pictures")}
+          active={active === "pictures"}
+          component={<Link to="/pictures" />}
           icon={<PhotoSizeSelectActualIcon />}
           className="rps-menu-item"
         >
-          {" "}
-          {collapsed ? "" : <span>Pictures</span>}{" "}
+          {collapsed ? "" : <span>Pictures</span>}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => handleMenuItemClick("Health")}
-          active={active === "Health"}
-          component={<Link to="/Health" />}
+          onClick={() => handleMenuItemClick("health")}
+          active={active === "health"}
+          component={<Link to="/health" />}
           icon={<FavoriteIcon />}
           className="rps-menu-item"
         >
-          {" "}
-          {collapsed ? "" : <span>Health</span>}{" "}
+          {collapsed ? "" : <span>Health</span>}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => handleMenuItemClick("Financials")}
-          active={active === "Financials"}
-          component={<Link to="/Financials" />}
+          onClick={() => handleMenuItemClick("financials")}
+          active={active === "financials"}
+          component={<Link to="/financials" />}
           icon={<AttachMoneyIcon />}
           className="rps-menu-item"
         >
-          {" "}
-          {collapsed ? "" : <span>Financials</span>}{" "}
+          {collapsed ? "" : <span>Financials</span>}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => handleMenuItemClick("Todo")}
-          active={active === "Todo"}
-          component={<Link to="/Todo" />}
+          onClick={() => handleMenuItemClick("todo")}
+          active={active === "todo"}
+          component={<Link to="/todo" />}
           icon={<CheckBoxIcon />}
           className="rps-menu-item"
         >
-          {" "}
-          {collapsed ? "" : <span>Todo</span>}{" "}
+          {collapsed ? "" : <span>Todo</span>}
         </StyledMenuItem>
         <StyledMenuItem
-          onClick={() => handleMenuItemClick("Journal")}
-          active={active === "Journal"}
-          component={<Link to="/Journal" />}
+          onClick={() => handleMenuItemClick("journal")}
+          active={active === "journal"}
+          component={<Link to="/journal" />}
           icon={<CreateIcon />}
           className="rps-menu-item"
         >
-          {" "}
-          {collapsed ? "" : <span>Journal</span>}{" "}
+          {collapsed ? "" : <span>Journal</span>}
         </StyledMenuItem>
+        <LogOutButton icon={<LogoutIcon />} onClick={logout}>
+          {collapsed ? "" : <span>Log Out</span>}
+        </LogOutButton>
       </StyledMenu>
     </StyledSidebar>
   );

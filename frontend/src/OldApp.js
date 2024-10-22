@@ -49,6 +49,8 @@ const Container = styled.div`
   height: 100%;
 `;
 
+
+
 const AppMain = styled.div`
   background-color: #15215d;
   flex-grow: 1;
@@ -58,4 +60,6 @@ const AppMain = styled.div`
   flex-direction: column;
   overflow: hidden;
 `;
-export default App;
+
+
+
