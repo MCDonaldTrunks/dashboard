@@ -1,32 +1,59 @@
 .overlay {
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.541);
-    position: absolute;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    margin: auto;
-    background-color: transparent;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.541);
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  margin: auto;
+  background-color: blue;
+  font-size: 25px;
+
+  input {
     font-size: 25px;
-  
-    input {
-      font-size: 25px;
-      border: none;
-      margin-bottom: 10px;
-    }
-  
-    .modal-button {
-      font-size: 25px;
-      padding: 1rem;
-    }
+    border: none;
+    margin-bottom: 10px;
   }
+
+  .modal-button {
+    font-size: 25px;
+    padding: 1rem;
+    background-color: rgb(0, 143, 12);
+  }
+}
+
+.modalBackground {
+  background-color: rgba(0, 21, 112, 0.486); // Dark semi-transparent background for the modal
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: #1c244b; // Updated to align with your other page's theme colors
+  padding: 20px;
+  border-radius: 10px;
+  color: #e0e1dd; // Font color that aligns with your theme
+  max-width: 500px;
+  width: 100%;
+}
+
+.subbutton{
+  background-color: blue;
+}

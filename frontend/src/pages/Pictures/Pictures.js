@@ -1,19 +1,38 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchPictures, uploadPicture } from "../../slices/pictureSlice";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PicturesModal from "./PicturesModal";
 
-const Wrapper = styled.div`
-  width: auto;
-  height: auto;
-  color: white;
+// Styled Components
+const PicturesContainer = styled.div`
   display: flex;
-  z-index: 0;
-  padding: 0 15px 15px 0;
   flex-direction: column;
+  padding: 0;  /* Updated padding to 0 for consistency */
+  background-color: none; /* Adding background to align with the other components */
+  min-height: 100vh;
+  color: #e0e1dd;
 `;
 
-const StyledButton = styled.button`
+const PicturesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
+  margin-top: 20px;
+`;
+
+const PictureCard = styled.div`
+  background-color: #1b263b;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const AddPictureButton = styled.button`
   width: 100px;
   height: 50px;
   margin-bottom: 20px;
@@ -25,122 +44,91 @@ const StyledButton = styled.button`
   &:hover {
     background-color: #313f83;
   }
-`;
-
+`
 const Title = styled.h1`
   font-size: 30px;
   margin-bottom: 20px;
-  color: white;
-`;
+  color: white;  
+`
 
-const Picturebox = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  aspect-ratio: auto;
+const Pictures = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { pictures, loading, error } = useSelector((state) => state.pictures);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  img{
-    height: 150px;
-    aspect-ratio: auto;
-    margin-right: 20px;
-    margin-bottom: 20px;
-  }
-`;
-
-let pictures = [
-  {
-    albums: {
-      album1: [],
-      album2: [],
-      album3: [],
-      album4: [],
-    },
-  },
-
-  {
-    Picture: {
-      
-    },
-  },
-];
-
-console.log(pictures[1].Picture.picture1);
-
-function Pictures(props) {
-  //const [image, setImage] = useState();
-  const [modalOpen, setModalOpen] = useState(false);
-  const [picture, setPicture] = useState(null);
-
-  const addPicture = (item) => {
-    console.log("add picture innit");
-    console.log(item);
-    console.log(picture);
-
-    setPicture(item);
-    console.log("halfway point--------------------");
-    let picsLength = () => {
-      let count = 0
-      for( let item in pictures[1].Picture){
-        count++
-      }
-      return count + 1;
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
     }
-    pictures[1].Picture[`picture${picsLength()}`] = item;
-    console.log('Picture folder keys')
-    console.log(pictures[1].Picture)
-    console.log(item);
-    console.log(picture);
-    console.log("add picture finished");
+  }, [isAuthenticated, navigate]);
 
-    // useEffect(() => {
-    //   console.log('use affct function')
-    //   console.log(picture)
-    // },[picture]);
+  // Fetch pictures on component mount
+  useEffect(() => {
+    
+    if (isAuthenticated) {
+      dispatch(fetchPictures());
+    }
+  }, [dispatch, isAuthenticated]);
+
+  const handleAddPicture = (picture) => {
+    dispatch(uploadPicture(picture));
+    setIsModalOpen(false);
+  };
+
+  const handleImageUrl = (picture) => {
+    if (picture.image) {
+        return picture.image; // Directly return the URL provided by the backend
+    }
+    return null;
+};
+
+  
+
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
-    <>
+    <PicturesContainer>
       <Title>Pictures</Title>
-      <StyledButton onClick={() => setModalOpen(true)}>
-        Add Picture
-      </StyledButton>
-      <Wrapper>
-        <div className="albums"></div>
-        <div className="latest" style={{ height: " 500px", width: "100%" }}>
-          {picture && (
-            
-            <Picturebox id="picturebox">
-              {console.log(pictures)}
-              {
-                Object.keys(pictures[1].Picture).map((item, i) => {
-                  return (
-                    <img key={i} src={pictures[1].Picture[`${item}`]} alt="picture"></img>
-
-                  )
-                })
-              }
-              {console.log(pictures)}
-              {/* {console.log(picture)}
-              <h1>Picture</h1>
-              <img
-                
-                src={pictures[1].Picture.picture1} //pictures[1].Picture.picture1[0][0]
-                alt="picture"
-              /> */}
-            </Picturebox>
-          )}
-        </div>
-       
-        <div className="pictures"></div>
-      </Wrapper>
+      <AddPictureButton onClick={openModal}>Add Picture</AddPictureButton>
       <PicturesModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        //onEventAdded={(event) => onEventAdded(event)}
-        addPicture={(item) => addPicture(item)}
-      ></PicturesModal>
-    </>
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSave={handleAddPicture}
+      />
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: "red" }}>Error fetching pictures: {error.detail || error}</p>}
+      <PicturesGrid>
+        {pictures && Array.isArray(pictures) && pictures.length > 0 ? (
+          pictures.map((picture) => (
+            <PictureCard key={picture.id}>
+              {handleImageUrl(picture) ? (
+                <img
+                  src={handleImageUrl(picture)}
+                  alt="User uploaded"
+                  style={{ width: "100%", borderRadius: "10px" }}
+                />
+              ) : (
+                <p>No image available</p>
+              )}
+            </PictureCard>
+          ))
+        ) : (
+          <p>No pictures available</p>
+        )}
+      </PicturesGrid>
+
+    </PicturesContainer>
   );
-}
+};
 
 export default Pictures;

@@ -1,48 +1,40 @@
-import React from "react";
-import Modal from "react-modal";
-import { useState } from "react";
-import styles from "./Modal.module.scss";
+import React, { useState } from 'react';
+import styles from './Modal.module.scss';
 
-export default function ({ isOpen, onClose, addPicture }) {
-  const [input, setInput] = useState();
-  // const [caption, setCaption] = useState('');
-  // const [end, setEnd] = useState(new Date());
+const PicturesModal = ({ isOpen, onClose, onSave }) => {
+  const [picture, setPicture] = useState(null);
 
-  const onSubmit = (event) => {
-    //console.log('onSubmit');
+  if (!isOpen) {
+    return null;
+  }
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-    //console.log(input);
-    addPicture(input);
-    //console.log(event);
-    //onEventAdded({ title, start, end });
-    onClose();
-    //console.log('...............');
-    
+    if (picture) {
+      onSave({ image: picture });
+    }
   };
+
+  const handleFileChange = (event) => {
+    setPicture(event.target.files[0]);
+  };
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      className={styles.content}
-      overlayClassName={styles.overlay}
-    >
-      <form onSubmit={onSubmit}>
-        <input
-          type="file"
-          id="myfile"
-          name="myfile"
-          onChange={(e) => {
-            //console.log('onChange input')
-            //console.log(e.target.files[0])
-            setInput(URL.createObjectURL(e.target.files[0]));
-            //console.log(input)
-            //console.log('..............')
-          }}
-        ></input>
-        <button className={styles["modal-button"]} type="submit">
-          Add Picture
-        </button>
-      </form>
-    </Modal>
+    <div className={styles.modalBackground}>
+      <div className={styles.modalContent}>
+        <button onClick={onClose} style={{ float: 'right' }}>X</button>
+        <h2>Add Picture</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+          <button className={styles.subbutton} type="submit">Upload Picture</button>
+        </form>
+      </div>
+    </div>
   );
-}
+};
+
+export default PicturesModal;

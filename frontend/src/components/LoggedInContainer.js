@@ -8,6 +8,7 @@ import Health from "../pages/Health/Health";
 import Financials from "../pages/Financials/Financials";
 import ProtectedRoute from "./ProtectedRoute";
 import styled from "styled-components";
+import Pictures from "../pages/Pictures/Pictures";
 
 // Define the styled components for the layout
 const Container = styled.div`
@@ -40,6 +41,7 @@ const LoggedInContainer = () => {
             <Route path="/readings" element={<Readings />} />
             <Route path="/health" element={<Health />} />
             <Route path="/financials" element={<Financials />} />
+            <Route path="/pictures" element={<Pictures />} />
           </Routes>
         </ProtectedRoute>
       </MainContent>

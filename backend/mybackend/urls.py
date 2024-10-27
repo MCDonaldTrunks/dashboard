@@ -14,22 +14,27 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.http import HttpResponse
 
-
 urlpatterns = [
+    # ... your existing urlpatterns here ...
     path('admin/', admin.site.urls),
     path('', include('workouts.urls')),
     path('auth/', include('userauths.urls')),
     path('', lambda request: HttpResponse("Hello, this is the root path!")),
-    
-]
+    path('workouts/', include('workouts.urls')),
+    path('pictures/', include('pictures.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Use the `static()` function correctly
 
 
 urlpatterns += i18n_patterns(
     path('set_language/', include('django.conf.urls.i18n')),
-    
 )
