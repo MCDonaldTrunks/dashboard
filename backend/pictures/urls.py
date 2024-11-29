@@ -1,14 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import PictureViewSet
+from .views import PictureViewSet, AlbumViewSet
 
-# Create a router and register the PictureViewSet with it
 router = DefaultRouter()
-router.register(r'', PictureViewSet, basename='pictures')
+router.register(r'pictures', PictureViewSet, basename='pictures')
+router.register(r'albums', AlbumViewSet, basename='albums')
 
-# Define the urlpatterns for this app
 urlpatterns = [
     path('', include(router.urls)),
-    
-    # Include all the viewset routes
+    path('upload/', PictureViewSet.as_view({'post': 'upload'}), name='picture-upload'),  # This line should remain
 ]

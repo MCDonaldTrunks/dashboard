@@ -1,14 +1,14 @@
 from django.contrib import admin
+from .models import Picture, Album
 
-# Register your models here.
-from .models import Picture
-
-
-
+@admin.register(Picture)
 class PictureAdmin(admin.ModelAdmin):
-    # Define how the model should be displayed in the list view in the admin
-    list_display = ('id', 'description', 'user', 'uploaded_at')  # Replace with actual field names
-    search_fields = ('description', 'user__username')  # Allow search by these fields
+    list_display = ['id', 'user', 'album', 'uploaded_at', 'image']
+    list_filter = ['user', 'album']
+    search_fields = ['description']
 
-# Register the Picture model with the custom admin
-admin.site.register(Picture, PictureAdmin)
+@admin.register(Album)
+class AlbumAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'user', 'created_at']
+    search_fields = ['name', 'description']
+    list_filter = ['user']

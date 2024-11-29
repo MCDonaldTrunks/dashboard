@@ -1,35 +1,67 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPictures, uploadPicture } from "../../slices/pictureSlice";
-import { useNavigate } from "react-router-dom";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import PicturesModal from "./PicturesModal"; // Import the add picture modal
 import styled from "styled-components";
-import PicturesModal from "./PicturesModal";
 
 // Styled Components
 const PicturesContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0;  /* Updated padding to 0 for consistency */
-  background-color: none; /* Adding background to align with the other components */
-  min-height: 100vh;
+  padding: 0;
+  min-height: 97vh;
   color: #e0e1dd;
+  overflow-y: auto;
+  scrollbar-width: thin;
 `;
 
 const PicturesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
   gap: 20px;
   width: 100%;
   margin-top: 20px;
 `;
 
 const PictureCard = styled.div`
+  position: relative;
   background-color: #1b263b;
   padding: 10px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 250px;
+  max-height: 250px;
+  width: 100%;
+  height: auto;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const StyledImage = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 5px;
+`;
+
+const DeleteButton = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 0, 0, 0.7);
+  }
 `;
 
 const AddPictureButton = styled.button`
@@ -41,92 +73,71 @@ const AddPictureButton = styled.button`
   border: 1px solid white;
   border-radius: 5px;
   cursor: pointer;
+
   &:hover {
     background-color: #313f83;
   }
-`
-const Title = styled.h1`
-  font-size: 30px;
-  margin-bottom: 20px;
-  color: white;  
-`
+`;
 
 const Pictures = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { pictures, loading, error } = useSelector((state) => state.pictures);
-  const { isAuthenticated } = useSelector((state) => state.auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPicture, setSelectedPicture] = useState(null);
+  const [addPictureModalOpen, setAddPictureModalOpen] = useState(false);
 
-  // Redirect to login if not authenticated
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [isAuthenticated, navigate]);
+    dispatch(fetchPictures());
+  }, [dispatch]);
 
-  // Fetch pictures on component mount
-  useEffect(() => {
-    
-    if (isAuthenticated) {
-      dispatch(fetchPictures());
-    }
-  }, [dispatch, isAuthenticated]);
-
-  const handleAddPicture = (picture) => {
-    dispatch(uploadPicture(picture));
-    setIsModalOpen(false);
-  };
-
-  const handleImageUrl = (picture) => {
-    if (picture.image) {
-        return picture.image; // Directly return the URL provided by the backend
-    }
-    return null;
-};
-
-  
-
-
-  const openModal = () => {
+  const openModal = (picture) => {
+    setSelectedPicture(picture);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setSelectedPicture(null);
+  };
+
+  const handleAddPicture = (picture) => {
+    dispatch(uploadPicture(picture));
+    setAddPictureModalOpen(false);
   };
 
   return (
     <PicturesContainer>
-      <Title>Pictures</Title>
-      <AddPictureButton onClick={openModal}>Add Picture</AddPictureButton>
+      <h1>Pictures</h1>
+      <AddPictureButton onClick={() => setAddPictureModalOpen(true)}>
+        Add Picture
+      </AddPictureButton>
       <PicturesModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
+        isOpen={addPictureModalOpen}
+        onClose={() => setAddPictureModalOpen(false)}
         onSave={handleAddPicture}
       />
       {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>Error fetching pictures: {error.detail || error}</p>}
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
       <PicturesGrid>
-        {pictures && Array.isArray(pictures) && pictures.length > 0 ? (
+        {pictures.length > 0 ? (
           pictures.map((picture) => (
             <PictureCard key={picture.id}>
-              {handleImageUrl(picture) ? (
-                <img
-                  src={handleImageUrl(picture)}
-                  alt="User uploaded"
-                  style={{ width: "100%", borderRadius: "10px" }}
-                />
-              ) : (
-                <p>No image available</p>
-              )}
+              <StyledImage src={picture.image} alt="User uploaded" />
+              <DeleteButton onClick={() => openModal(picture)}>
+                <DeleteIcon style={{ color: "white" }} />
+              </DeleteButton>
             </PictureCard>
           ))
         ) : (
           <p>No pictures available</p>
         )}
       </PicturesGrid>
-
+      {isModalOpen && (
+        <ConfirmDeleteModal
+          picture={selectedPicture}
+          onClose={closeModal}
+        />
+      )}
     </PicturesContainer>
   );
 };
