@@ -102,7 +102,7 @@ const deletePicture = createAsyncThunk(
           // Try refreshing the token
           await dispatch(refreshAccessToken());
           const { accessToken } = getState().auth;
-          await axios.delete(`http://localhost:8000/pictures/${pictureId}/`, {
+          await axios.delete(`http://localhost:8000/pictures/pictures/${pictureId}/`, {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
@@ -117,6 +117,33 @@ const deletePicture = createAsyncThunk(
     }
   }
 );
+
+// Thunk to update a picture
+const updatePicture = createAsyncThunk(
+  'pictures/updatePicture',
+  async ({ id, data }, { getState, rejectWithValue }) => {
+    try {
+      const { accessToken } = getState().auth;
+      const response = await axios.patch(
+        `http://localhost:8000/pictures/pictures/${id}/`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'multipart/form-data', // Set for FormData
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+
+ 
+export {updatePicture}
 
 const pictureSlice = createSlice({
   name: 'pictures',
@@ -169,6 +196,13 @@ const pictureSlice = createSlice({
       .addCase(deletePicture.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(updatePicture.fulfilled, (state, action) => {
+        const updatedPicture = action.payload;
+        const index = state.pictures.findIndex((p) => p.id === updatedPicture.id);
+        if (index !== -1) {
+          state.pictures[index] = updatedPicture; // Update the Redux state immediately
+        }
       });
   },
 });

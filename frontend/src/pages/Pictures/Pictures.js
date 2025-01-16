@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPictures, uploadPicture } from "../../slices/pictureSlice";
 import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
-import PicturesModal from "./PicturesModal"; // Import the add picture modal
+import PicturesModal from "./PicturesModal";
+import ViewImageModal from "./ViewImageModal"; // For viewing full-size images
+import EditPictureModal from "./EditPictureModal";
 import styled from "styled-components";
 
 // Styled Components
@@ -51,18 +56,34 @@ const StyledImage = styled.img`
   border-radius: 5px;
 `;
 
-const DeleteButton = styled.div`
+const ButtonGroup = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const IconButton = styled.div`
   background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
+  padding: 5px;
   cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 10%;
 
   &:hover {
-    background: rgba(255, 0, 0, 0.7);
+  
+    background: rgba(255, 255, 255, 0.8);
+    opacity: 100%;
+
+    svg {
+    fill: #1b263b;
+  };
   }
-`;
+
+`
 
 const AddPictureButton = styled.button`
   width: 100px;
@@ -85,6 +106,8 @@ const Pictures = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPicture, setSelectedPicture] = useState(null);
   const [addPictureModalOpen, setAddPictureModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchPictures());
@@ -100,9 +123,34 @@ const Pictures = () => {
     setSelectedPicture(null);
   };
 
+  const openViewModal = (picture) => {
+    setSelectedPicture(picture);
+    setIsViewModalOpen(true);
+  };
+
+  const closeViewModal = () => {
+    setIsViewModalOpen(false);
+    setSelectedPicture(null);
+  };
+
   const handleAddPicture = (picture) => {
     dispatch(uploadPicture(picture));
     setAddPictureModalOpen(false);
+  };
+
+  const handleEditPicture = (picture) => {
+    //console.log("Edit picture functionality", picture);
+    openEditModal(picture);
+  };
+
+  const openEditModal = (picture) => {
+    setSelectedPicture(picture);
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setSelectedPicture(null);
   };
 
   return (
@@ -123,9 +171,17 @@ const Pictures = () => {
           pictures.map((picture) => (
             <PictureCard key={picture.id}>
               <StyledImage src={picture.image} alt="User uploaded" />
-              <DeleteButton onClick={() => openModal(picture)}>
-                <DeleteIcon style={{ color: "white" }} />
-              </DeleteButton>
+              <ButtonGroup>
+                <IconButton onClick={() => openViewModal(picture)}>
+                  <VisibilityIcon style={{ color: "white" }} />
+                </IconButton>
+                <IconButton onClick={() => handleEditPicture(picture)}>
+                  <EditIcon style={{ color: "white" }} />
+                </IconButton>
+                <IconButton onClick={() => openModal(picture)}>
+                  <DeleteIcon style={{ color: "white" }} />
+                </IconButton>
+              </ButtonGroup>
             </PictureCard>
           ))
         ) : (
@@ -136,6 +192,18 @@ const Pictures = () => {
         <ConfirmDeleteModal
           picture={selectedPicture}
           onClose={closeModal}
+        />
+      )}
+      {isViewModalOpen && (
+        <ViewImageModal
+          picture={selectedPicture}
+          onClose={closeViewModal}
+        />
+      )}
+      {isEditModalOpen && (
+        <EditPictureModal
+          picture={selectedPicture}
+          onClose={closeEditModal}
         />
       )}
     </PicturesContainer>
